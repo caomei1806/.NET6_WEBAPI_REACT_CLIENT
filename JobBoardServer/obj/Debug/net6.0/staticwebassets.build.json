@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "NRIQ0QOeVivl7nbOYZJoiDXR98abFu1t2bKDRIwpuhE=",
+  "Source": "JobBoardServer",
+  "BasePath": "_content/JobBoardServer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
