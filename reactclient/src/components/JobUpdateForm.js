@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Constants from '../Constants'
 
 const JobUpdateForm = (props) => {
@@ -8,8 +8,10 @@ const JobUpdateForm = (props) => {
 	})
 
 	const [newJob, setNewJob] = useState(initialFormData)
+	const [alertState, setAlertState] = useState(false)
 
 	const handleChange = (e) => {
+		setAlertState(false)
 		setNewJob({
 			...newJob,
 			[e.target.name]: e.target.value,
@@ -25,21 +27,32 @@ const JobUpdateForm = (props) => {
 		}
 		const url = Constants.API_URL_UPADATE_JOB
 		try {
-			const api = await fetch(url, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(jobToUpdate),
-			})
-			const response = await api.json()
-			console.log(response)
+			if (jobToUpdate.title !== '' && jobToUpdate.description !== '') {
+				const api = await fetch(url, {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(jobToUpdate),
+				})
+				const response = await api.json()
+				console.log(response)
+				props.onJobUpdated(jobToUpdate)
+			} else {
+				setAlertState(true)
+			}
 		} catch (error) {
 			console.log(error)
 		}
-
-		props.onJobUpdated(jobToUpdate)
 	}
+
+	useEffect(() => {
+		let alertTimeout = setTimeout(() => setAlertState(false), 5000)
+
+		return () => {
+			clearTimeout(alertTimeout)
+		}
+	}, [alertState])
 
 	return (
 		<form className='w-100 px-5'>
@@ -71,6 +84,11 @@ const JobUpdateForm = (props) => {
 					onChange={handleChange}
 				/>
 			</div>
+			{alertState && (
+				<div class='alert alert-danger mt-4' role='alert'>
+					Field cannot be empty! Please fill the form inputs with entries.
+				</div>
+			)}
 			<button
 				className='btn btn-dark btn-lg w-100 mt-5'
 				type='submit'

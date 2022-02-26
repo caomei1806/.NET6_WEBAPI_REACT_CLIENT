@@ -2,7 +2,7 @@
 
 namespace JobBoardServer.Data
 {
-    internal sealed class Job
+    public class Job
     {
         [Key]
         public int Id { get; set; }

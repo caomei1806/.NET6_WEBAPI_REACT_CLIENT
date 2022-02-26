@@ -2,9 +2,9 @@
 
 namespace JobBoardServer.Data
 {
-    internal static class JobsRepository
+    public class JobsService
     {
-        internal async static Task<IEnumerable<Job>> GetJobsAsync()
+        public async static Task<IEnumerable<Job>> GetJobsAsync()
         {
             using (var db = new AppDBContext())
             {
@@ -12,7 +12,7 @@ namespace JobBoardServer.Data
             }
         }
 
-        internal async static Task<Job> GetJobByIdAsync(int jobId)
+        public async static Task<Job> GetJobByIdAsync(int jobId)
         {
             using(var db = new AppDBContext())
             {
@@ -20,7 +20,7 @@ namespace JobBoardServer.Data
             }
         }
 
-        internal async static Task<bool> CreateJobAsync(Job jobToCreate)
+        public async static Task<bool> CreateJobAsync(Job jobToCreate)
         {
             using (var db = new AppDBContext())
             {
@@ -36,7 +36,7 @@ namespace JobBoardServer.Data
             }
         }
 
-        internal async static Task<bool> UpdateJobAsync(Job jobToUpdate)
+        public async static Task<bool> UpdateJobAsync(Job jobToUpdate)
         {
             using (var db = new AppDBContext())
             {
@@ -51,7 +51,7 @@ namespace JobBoardServer.Data
                 }
             }
         }
-        internal async static Task<bool> DeleteJobAsync(int jobId)
+        public async static Task<bool> DeleteJobAsync(int jobId)
         {
             using (var db = new AppDBContext())
             {

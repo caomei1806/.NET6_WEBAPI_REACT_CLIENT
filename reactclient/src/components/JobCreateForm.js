@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Constants from '../Constants'
+import { useNavigate } from 'react-router-dom'
 
 const JobCreateForm = (props) => {
 	const initialFormData = Object.freeze({
@@ -9,6 +10,8 @@ const JobCreateForm = (props) => {
 
 	const [newJob, setNewJob] = useState(initialFormData)
 	const [alertState, setAlertState] = useState(false)
+
+	const navigate = useNavigate()
 
 	const handleChange = (e) => {
 		setAlertState(false)
@@ -40,6 +43,7 @@ const JobCreateForm = (props) => {
 				const response = await api.json()
 				console.log(response)
 				props.onJobCreated(postToCreate)
+				navigate('/')
 			} else {
 				setAlertState(true)
 			}
@@ -86,7 +90,7 @@ const JobCreateForm = (props) => {
 				/>
 			</div>
 			{alertState && (
-				<div class='alert alert-danger mt-4' role='alert'>
+				<div className='alert alert-danger mt-4' role='alert'>
 					Field cannot be empty! Please fill the form inputs with entries.
 				</div>
 			)}

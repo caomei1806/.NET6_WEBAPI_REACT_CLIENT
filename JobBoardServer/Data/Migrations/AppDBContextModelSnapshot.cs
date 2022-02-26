@@ -68,6 +68,58 @@ namespace JobBoardServer.Data.Migrations
                             Title = "Job5"
                         });
                 });
+
+            modelBuilder.Entity("JobBoardServer.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserList");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EmailAddress = "karo.admin@email.com",
+                            FirstName = "Karo",
+                            LastName = "Lina",
+                            Password = "haslo123",
+                            Role = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EmailAddress = "via.admin@email.com",
+                            FirstName = "Via",
+                            LastName = "Oli",
+                            Password = "haslo321",
+                            Role = "user"
+                        });
+                });
 #pragma warning restore 612, 618
         }
     }

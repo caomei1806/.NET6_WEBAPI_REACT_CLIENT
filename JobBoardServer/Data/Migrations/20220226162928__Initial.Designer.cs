@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobBoardServer.Data.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20220224114512_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20220226162928__Initial")]
+    partial class _Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,6 +68,58 @@ namespace JobBoardServer.Data.Migrations
                             Id = 5,
                             Description = "Description of job 5",
                             Title = "Job5"
+                        });
+                });
+
+            modelBuilder.Entity("JobBoardServer.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserList");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EmailAddress = "karo.admin@email.com",
+                            FirstName = "Karo",
+                            LastName = "Lina",
+                            Password = "haslo123",
+                            Role = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EmailAddress = "via.admin@email.com",
+                            FirstName = "Via",
+                            LastName = "Oli",
+                            Password = "haslo321",
+                            Role = "user"
                         });
                 });
 #pragma warning restore 612, 618
