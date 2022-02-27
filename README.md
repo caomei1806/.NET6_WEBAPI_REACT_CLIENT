@@ -8,10 +8,10 @@ Aplikacja pozwala na:
 Przegląd listy ogłoszeń o pracę
 Zalogowanie sie do Panelu Administratora 
 ###### Po zalogowaniu na konto email:**karo.admin@email.com** password:**haslo123**
-Przegląd listy ogłoszeń oraz ich edycje i usuniecie
-Dodanie nowego ogloszenia **Po zalogowaniu pojawi sie link w Nawigacji**
-Akcje CUD z **CRUD** moze wykonac tylko uzytkownik zalogowany z rola **admin**
-Mozna sie tez zalogowac kontem, ktore ma przydzielone zwykla role uzytkownika **via.admin@email.com** **haslo321**. Wyswietli mu sie panel administratora, jednak nie bedzie mogl wykonac akcji **CUD**
+Przegląd listy ogłoszeń oraz ich edycje i usuniecie  
+Dodanie nowego ogloszenia **Po zalogowaniu pojawi sie link w Nawigacji**  
+Akcje CUD z **CRUD** moze wykonac tylko uzytkownik zalogowany z rola **admin**  
+Mozna sie tez zalogowac kontem, ktore ma przydzielone zwykla role uzytkownika **via.admin@email.com** **haslo321**. Wyswietli mu sie panel administratora, jednak nie bedzie mogl wykonac akcji **CUD**  
 
 #### ROUTING
 ###### /
