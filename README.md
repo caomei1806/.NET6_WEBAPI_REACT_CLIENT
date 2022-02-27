@@ -1,9 +1,11 @@
 # .NET6_WEBAPI_REACT_CLIENT
 
 ## TEMPORARY DOCS:
-
-#### Server : ASP.NET CORE 6 minimal API 
- 
+#### Client : React App http://localhost:3000
+------------------
+#### Server : ASP.NET CORE 6 minimal API https://localhost:3000
+##### Launching with SwaggerUI
+##### GENERAL INFO 
 ##### ENDPOINTS:
 ###### /jobs
   GET: zwraca listę dostępnych ogłoszeń o prace
@@ -19,7 +21,7 @@
     -obsługuje Autoryzację
     -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
 ###### /jobs-update
-------------------
+
   PUT: 
     -pozwala na edycję ogłoszenia
     -obsługuje Autoryzację
@@ -31,7 +33,7 @@
     -obsługuje Autoryzację
     -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
 ###### /api/login
-  - zwraca JWT pozwalający na autoryzację
+  zwraca JWT pozwalający na autoryzację
 
 
 
