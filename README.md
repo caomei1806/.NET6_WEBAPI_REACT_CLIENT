@@ -4,17 +4,17 @@
 #### Client : React App http://localhost:3000
 ##### ROUTING
 ###### /
-**NOT LOGGED IN**
+**NOT LOGGED IN**  
 Wyświetla tablice ogłoszeń
-**LOGGED IN**
+**LOGGED IN**  
 Wyświetla Panel Edycji ogłoszeń z możliwością edycji i usuniecia
 
 ###### /jobs-create 
-###### LOGGED IN
+**LOGGED IN**  
 Wyświetla Panel Dodaj ogloszenie 
 
 ###### /api/login
-**NOT LOGGED IN**
+**NOT LOGGED IN**  
 Wyświetla Panel logowania **dane do logowania podane pod email inputem"
 
 
