@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import NavbarBrand from './shared/NavbarBrand'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import JobCreateForm from './components/JobCreateForm'
 import JobList from './components/JobList'
 import Constants from './Constants'
-
+import LoginForm from './components/LoginForm'
+import AuthContext from './context/AuthProvider'
+import JobListing from './components/JobListing'
+const CREATEJOB_URL = '/jobs-create'
 function App() {
 	const [jobs, setJobs] = useState([])
 	const [updateJob, setUpdateJob] = useState(null)
+	const { auth } = useContext(AuthContext)
 
 	const getJobs = async () => {
 		const url = Constants.API_URL_GET_ALL_JOBS
@@ -36,7 +40,6 @@ function App() {
 
 	const onJobUpdated = (updatedJob) => {
 		if (updatedJob === null) {
-			return
 		}
 		setUpdateJob(null)
 		let clonedJobs = [...jobs]
@@ -77,6 +80,7 @@ function App() {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
+					Authorization: `Bearer ${auth.accessToken}`,
 				},
 				body: JSON.stringify(jobId),
 			})
@@ -105,10 +109,12 @@ function App() {
 							/>
 						}
 					/>
+					<Route path='/:id' element={<JobListing jobs={jobs} />} />
 					<Route
 						path='/create-job'
 						element={<JobCreateForm onJobCreated={onJobCreated} />}
 					/>
+					<Route path='/login' element={<LoginForm />} />
 				</Routes>
 			</Router>
 		</div>

@@ -19,10 +19,35 @@ builder.Services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.Al
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-builder.Services.AddSwaggerGen(swaggerGenOptions =>
+builder.Services.AddSwaggerGen(options =>
 {
-    swaggerGenOptions.SwaggerDoc("v1.0", new OpenApiInfo { Title = "ASP.NET React JobBoard", Version = "v1.0" });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Description = "Bearer Authentication with JWT Token",
+        Type = SecuritySchemeType.Http
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            new List<string>()
+        }
+    });
 });
+
+builder.Services.AddMvc();
+builder.Services.AddControllers();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -38,11 +63,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
-builder.Services.AddAuthorization();
 
+builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSingleton<JobsService>();
-builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IJobsService, JobsService>();
 
 
 
@@ -61,28 +85,29 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllers();
 
 
-app.MapGet("/jobs", async () => await JobsService.GetJobsAsync())
+app.MapGet("/jobs", async (IJobsService service) => await service.GetJobsAsync())
     .WithTags("Jobs Endpoints");
 
-app.MapGet("/jobs/{jobId}", async (int jobId) =>
+app.MapGet("/jobs/{jobId}", async (int jobId, IJobsService service) =>
 {
-    Job jobToReturn = await JobsService.GetJobByIdAsync(jobId);
+    Job jobToReturn = await service.GetJobByIdAsync(jobId);
     if (jobToReturn != null)
     {
         return Results.Ok(jobToReturn);
     }
     else
     {
-        return Results.BadRequest();
+        return Results.NotFound("Jobs not found");
 
     }
 
 }).WithTags("Jobs Endpoints");
-app.MapPost("/jobs-create", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] async (Job jobToCreate) =>
+app.MapPost("/jobs-create", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] async (Job jobToCreate,IJobsService service) =>
 {
-    bool createSuccess = await JobsService.CreateJobAsync(jobToCreate);
+    bool createSuccess = await service.CreateJobAsync(jobToCreate);
     if (createSuccess)
     {
         return Results.Ok("Create success");
@@ -95,12 +120,9 @@ app.MapPost("/jobs-create", [Authorize(AuthenticationSchemes = JwtBearerDefaults
 
 }).WithTags("Jobs Endpoints");
 
-
-app.MapPost("/login", async (UserLogin user, IUserService service) => Login(user, service));
-
-app.MapPut("/jobs-update", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] async (Job jobToUpdate) =>
+app.MapPut("/jobs-update", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] async (Job jobToUpdate, IJobsService service) =>
 {
-    bool updateSuccess = await JobsService.UpdateJobAsync(jobToUpdate);
+    bool updateSuccess = await service.UpdateJobAsync(jobToUpdate);
     if (updateSuccess)
     {
         return Results.Ok("Update success");
@@ -113,9 +135,10 @@ app.MapPut("/jobs-update", [Authorize(AuthenticationSchemes = JwtBearerDefaults.
 
 }).WithTags("Jobs Endpoints");
 
-app.MapDelete("/jobs-delete/{jobId}", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] async (int jobId) =>
+app.MapDelete("/jobs-delete/{jobId}", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] async (int jobId, IJobsService service) =>
 {
-    bool deleteSuccess = await JobsService.DeleteJobAsync(jobId);
+    
+    bool deleteSuccess = await service.DeleteJobAsync(jobId);
     if (deleteSuccess)
     {
         return Results.Ok("Delete success");
@@ -128,37 +151,10 @@ app.MapDelete("/jobs-delete/{jobId}", [Authorize(AuthenticationSchemes = JwtBear
 
 }).WithTags("Jobs Endpoints");
 
-IResult Login(UserLogin user, IUserService service)
+app.UseSwaggerUI(options =>
 {
-    if (!string.IsNullOrEmpty(user.EmailAddress) && !string.IsNullOrEmpty(user.Password))
-    {
-        var loggedInUser = service.Get(user);
-        if (loggedInUser == null) return Results.NotFound("User not found");
-
-        var claims = new[]{
-                    new Claim(ClaimTypes.NameIdentifier, loggedInUser.EmailAddress),
-                    new Claim(ClaimTypes.GivenName, loggedInUser.FirstName),
-                    new Claim(ClaimTypes.Surname, loggedInUser.LastName),
-                    new Claim(ClaimTypes.Role, loggedInUser.Role),
-                };
-        var token = new JwtSecurityToken(
-            issuer: builder.Configuration["Jwt:Issuer"],
-            audience: builder.Configuration["Jwt:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddDays(60),
-            signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),SecurityAlgorithms.HmacSha256)
-            );
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-        return Results.Ok(tokenString);
-    }
-    return Results.BadRequest("Invalid user credentials");
-}
-
-app.UseSwaggerUI(swaggerUIOptions =>
-{
-    swaggerUIOptions.DocumentTitle = "ASP.NET React JobBoard";
-    swaggerUIOptions.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Web API serving Job model");
-    swaggerUIOptions.RoutePrefix = string.Empty;
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = String.Empty;
 });
 
 app.Run();

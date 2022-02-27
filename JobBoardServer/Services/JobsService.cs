@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JobBoardServer.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobBoardServer.Data
 {
-    public class JobsService
+    public class JobsService : IJobsService
     {
-        public async static Task<IEnumerable<Job>> GetJobsAsync()
+        public async Task<IEnumerable<Job>> GetJobsAsync()
         {
             using (var db = new AppDBContext())
             {
@@ -12,15 +15,15 @@ namespace JobBoardServer.Data
             }
         }
 
-        public async static Task<Job> GetJobByIdAsync(int jobId)
+        public async Task<Job> GetJobByIdAsync(int jobId)
         {
             using(var db = new AppDBContext())
             {
                 return await db.JobList.FirstOrDefaultAsync(job => job.Id == jobId);
             }
         }
-
-        public async static Task<bool> CreateJobAsync(Job jobToCreate)
+        
+        public async Task<bool> CreateJobAsync(Job jobToCreate)
         {
             using (var db = new AppDBContext())
             {
@@ -36,7 +39,8 @@ namespace JobBoardServer.Data
             }
         }
 
-        public async static Task<bool> UpdateJobAsync(Job jobToUpdate)
+        [Authorize]
+        public async Task<bool> UpdateJobAsync(Job jobToUpdate)
         {
             using (var db = new AppDBContext())
             {
@@ -51,7 +55,7 @@ namespace JobBoardServer.Data
                 }
             }
         }
-        public async static Task<bool> DeleteJobAsync(int jobId)
+        public async Task<bool> DeleteJobAsync(int jobId)
         {
             using (var db = new AppDBContext())
             {

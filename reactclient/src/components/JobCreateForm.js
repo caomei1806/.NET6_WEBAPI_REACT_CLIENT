@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Constants from '../Constants'
 import { useNavigate } from 'react-router-dom'
+import AuthContext from '../context/AuthProvider'
+import axios from '../api/axios'
+const CREATEJOB_URL = '/jobs-create'
 
 const JobCreateForm = (props) => {
 	const initialFormData = Object.freeze({
@@ -10,6 +13,7 @@ const JobCreateForm = (props) => {
 
 	const [newJob, setNewJob] = useState(initialFormData)
 	const [alertState, setAlertState] = useState(false)
+	const { auth } = useContext(AuthContext)
 
 	const navigate = useNavigate()
 
@@ -22,8 +26,9 @@ const JobCreateForm = (props) => {
 	}
 	const handleSubmit = async (e) => {
 		e.preventDefault()
+		console.log(`Bearer ${auth.accessToken}`)
 
-		const postToCreate = {
+		const jobToCreate = {
 			postId: 0,
 			title: newJob.title,
 			description: newJob.description,
@@ -32,17 +37,23 @@ const JobCreateForm = (props) => {
 		const url = Constants.API_URL_CREATE_JOB
 
 		try {
-			if (postToCreate.title !== '' && postToCreate.description !== '') {
-				const api = await fetch(url, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(postToCreate),
-				})
-				const response = await api.json()
+			if (jobToCreate.title !== '' && jobToCreate.description !== '') {
+				const response = await axios.post(
+					CREATEJOB_URL,
+					JSON.stringify({
+						id: jobToCreate.postId,
+						title: jobToCreate.title,
+						description: jobToCreate.description,
+					}),
+					{
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${auth.accessToken}`,
+						},
+					}
+				)
 				console.log(response)
-				props.onJobCreated(postToCreate)
+				props.onJobCreated(jobToCreate)
 				navigate('/')
 			} else {
 				setAlertState(true)
@@ -60,7 +71,7 @@ const JobCreateForm = (props) => {
 		}
 	}, [alertState])
 	return (
-		<form className='w-100 px-5'>
+		<form className='w-100 px-5 container'>
 			<h1 className='mt-5'>Create new job listing</h1>
 
 			<div className='mt-5'>

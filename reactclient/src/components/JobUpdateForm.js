@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Constants from '../Constants'
+import axios from '../api/axios'
+import AuthContext from '../context/AuthProvider'
+
+const UPDATEJOB_URL = '/jobs-update'
 
 const JobUpdateForm = (props) => {
 	const initialFormData = Object.freeze({
@@ -9,6 +13,7 @@ const JobUpdateForm = (props) => {
 
 	const [newJob, setNewJob] = useState(initialFormData)
 	const [alertState, setAlertState] = useState(false)
+	const { auth } = useContext(AuthContext)
 
 	const handleChange = (e) => {
 		setAlertState(false)
@@ -28,14 +33,20 @@ const JobUpdateForm = (props) => {
 		const url = Constants.API_URL_UPADATE_JOB
 		try {
 			if (jobToUpdate.title !== '' && jobToUpdate.description !== '') {
-				const api = await fetch(url, {
-					method: 'PUT',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(jobToUpdate),
-				})
-				const response = await api.json()
+				const response = await axios.put(
+					UPDATEJOB_URL,
+					JSON.stringify({
+						id: jobToUpdate.id,
+						title: jobToUpdate.title,
+						description: jobToUpdate.description,
+					}),
+					{
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${auth.accessToken}`,
+						},
+					}
+				)
 				console.log(response)
 				props.onJobUpdated(jobToUpdate)
 			} else {

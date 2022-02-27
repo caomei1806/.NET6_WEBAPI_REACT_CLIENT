@@ -1,8 +1,10 @@
-﻿using JobBoardServer.Data.Repositories;
+﻿using JobBoardServer.Data;
+using JobBoardServer.Data.Repositories;
 using JobBoardServer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -36,7 +38,7 @@ namespace JobBoardServer.Controllers
             return NotFound("User not found");
         }
 
-        private string Generate(User user)
+        private IResult Generate(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -54,15 +56,21 @@ namespace JobBoardServer.Controllers
                 _configuration["Jwt:Audience"],
                 claims,
                 expires: DateTime.Now.AddMinutes(15),
+                notBefore: DateTime.UtcNow,
                 signingCredentials: credentials);
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString =  new JwtSecurityTokenHandler().WriteToken(token);
+            return Results.Ok(tokenString);
 
         }
 
         private User Authenticate(UserLogin userLogin)
         {
-            var currentUser = UserRepository.Users.FirstOrDefault(user => user.EmailAddress.ToLower() == userLogin.EmailAddress.ToLower() && user.Password == userLogin.Password);
-            if(currentUser != null)
+
+            var db = new AppDBContext();
+
+            var currentUser = db.UserList.FirstOrDefault(user => user.EmailAddress.ToLower() == userLogin.EmailAddress.ToLower() && user.Password == userLogin.Password);
+
+            if (currentUser != null)
             {
                 return currentUser;
             }
