@@ -15,11 +15,13 @@
     -obsługuje Autoryzację
     -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
 * /jobs-update
+-
   PUT: 
     -pozwala na edycję ogłoszenia
     -obsługuje Autoryzację
     -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
 * /jobs-delete/{id}
+-
   DELETE:
     - pozwala na usunięcie wybranego po id ogłoszenia
     -obsługuje Autoryzację
