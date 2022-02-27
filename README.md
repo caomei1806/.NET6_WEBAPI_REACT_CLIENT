@@ -5,17 +5,17 @@
 ##### ROUTING
 ###### /
 **NOT LOGGED IN**  
-Wyświetla tablice ogłoszeń
+Wyświetla tablice ogłoszeń  
 **LOGGED IN**  
-Wyświetla Panel Edycji ogłoszeń z możliwością edycji i usuniecia
+Wyświetla Panel Edycji ogłoszeń z możliwością edycji i usuniecia  
 
 ###### /jobs-create 
 **LOGGED IN**  
-Wyświetla Panel Dodaj ogloszenie 
+Wyświetla Panel Dodaj ogloszenie   
 
 ###### /api/login
 **NOT LOGGED IN**  
-Wyświetla Panel logowania **dane do logowania podane pod email inputem"
+Wyświetla Panel logowania **dane do logowania podane pod email inputem**  
 
 
 ------------------
