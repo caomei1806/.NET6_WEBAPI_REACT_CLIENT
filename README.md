@@ -7,13 +7,13 @@
 ##### ENDPOINTS:
 ###### /jobs
   GET: zwraca listę dostępnych ogłoszeń o prace
--
+
 ###### /jobs/{id}
--
+
   GET: zwraca pojedyncze ogłoszenie
--
+
 ###### /jobs-create
--
+
   POST: 
     -pozwala na dodanie nowego ogłoszenia
     -obsługuje Autoryzację
@@ -25,7 +25,7 @@
     -obsługuje Autoryzację
     -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
 ###### /jobs-delete/{id}
--
+
   DELETE:
     - pozwala na usunięcie wybranego po id ogłoszenia
     -obsługuje Autoryzację
