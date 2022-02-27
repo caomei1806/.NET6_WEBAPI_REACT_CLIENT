@@ -10,11 +10,11 @@ Wyświetla tablice ogłoszeń
 Wyświetla Panel Edycji ogłoszeń z możliwością edycji i usuniecia
 
 ###### /jobs-create 
-**LOGGED IN**
+###### LOGGED IN
 Wyświetla Panel Dodaj ogloszenie 
 
 ###### /api/login
-**NOT LOGGED IN **
+**NOT LOGGED IN**
 Wyświetla Panel logowania **dane do logowania podane pod email inputem"
 
 
