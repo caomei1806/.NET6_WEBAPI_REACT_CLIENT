@@ -1,9 +1,19 @@
 # .NET6_WEBAPI_REACT_CLIENT
+Aplikacja JobBoard z Panelem Administratora
+
+Run React App in development mode
+```
+npm start
+```
+
+Run and debug the JobBoardServer
+```
+>JobBoardServer
+```
 
 ## TEMPORARY DOCS:
 #### Client : React App http://localhost:3000
 #### GENERAL OVERWIEW
-Aplikacja pozwala na:
 ###### W początkowym trybie
 Przegląd listy ogłoszeń o pracę
 Zalogowanie sie do Panelu Administratora 
@@ -27,8 +37,10 @@ Wyświetla Panel Dodaj ogloszenie
 ###### /api/login
 **NOT LOGGED IN**  
 Wyświetla Panel logowania **dane do logowania podane pod email inputem**  
-
-
+#### NIEOBSLUZONE ASPEKTY APLIKACJI
+* Nie ma procedury wylogowania.  
+* Brak obslugi rol uzytkowanika - zalogowany uzytkownik majacy role "user" ma dostep do panelow admin ale nie moze wykonywac operacji CUD
+* Dlugosc zycia JWT to 15 minut - brak refresh token
 ------------------
 ### Server : ASP.NET CORE 6 minimal API https://localhost:3000
 ##### Launching with SwaggerUI
@@ -63,6 +75,9 @@ Wyświetla Panel logowania **dane do logowania podane pod email inputem**
     -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"  
 ###### /api/login  
   zwraca JWT pozwalający na autoryzację
+  
+#### NIEOBSLUZONE ASPEKTY APLIKACJI
+* Nie ma procedury wylogowania i registracji.  
 
 
 
