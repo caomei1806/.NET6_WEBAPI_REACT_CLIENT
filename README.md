@@ -2,7 +2,18 @@
 
 ## TEMPORARY DOCS:
 #### Client : React App http://localhost:3000
-##### ROUTING
+#### GENERAL OVERWIEW
+Aplikacja pozwala na:
+###### W początkowym trybie
+Przegląd listy ogłoszeń o pracę
+Zalogowanie sie do Panelu Administratora 
+###### Po zalogowaniu na konto email:**karo.admin@email.com** password:**haslo123**
+Przegląd listy ogłoszeń oraz ich edycje i usuniecie
+Dodanie nowego ogloszenia **Po zalogowaniu pojawi sie link w Nawigacji**
+Akcje CUD z **CRUD** moze wykonac tylko uzytkownik zalogowany z rola **admin**
+Mozna sie tez zalogowac kontem, ktore ma przydzielone zwykla role uzytkownika **via.admin@email.com** **haslo321**. Wyswietli mu sie panel administratora, jednak nie bedzie mogl wykonac akcji **CUD**
+
+#### ROUTING
 ###### /
 **NOT LOGGED IN**  
 Wyświetla tablice ogłoszeń  
@@ -19,10 +30,10 @@ Wyświetla Panel logowania **dane do logowania podane pod email inputem**
 
 
 ------------------
-#### Server : ASP.NET CORE 6 minimal API https://localhost:3000
+### Server : ASP.NET CORE 6 minimal API https://localhost:3000
 ##### Launching with SwaggerUI
-##### GENERAL INFO 
-##### ENDPOINTS:
+#### GENERAL INFO 
+#### ENDPOINTS:
 ###### /jobs
   **GET:**  
     -zwraca listę dostępnych ogłoszeń o prace
