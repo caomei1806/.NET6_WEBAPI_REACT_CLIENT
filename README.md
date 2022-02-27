@@ -24,27 +24,29 @@ Wyświetla Panel logowania **dane do logowania podane pod email inputem**
 ##### GENERAL INFO 
 ##### ENDPOINTS:
 ###### /jobs
-  GET: zwraca listę dostępnych ogłoszeń o prace
+  **GET:**
+    -zwraca listę dostępnych ogłoszeń o prace
 
 ###### /jobs/{id}
 
-  GET: zwraca pojedyncze ogłoszenie
+  **GET:**
+    -zwraca pojedyncze ogłoszenie
 
 ###### /jobs-create
 
-  POST: 
+  **POST:** 
     -pozwala na dodanie nowego ogłoszenia
     -obsługuje Autoryzację
     -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
 ###### /jobs-update
 
-  PUT: 
+  **PUT:** 
     -pozwala na edycję ogłoszenia
     -obsługuje Autoryzację
     -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
 ###### /jobs-delete/{id}
 
-  DELETE:
+  **DELETE:**
     - pozwala na usunięcie wybranego po id ogłoszenia
     -obsługuje Autoryzację
     -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
