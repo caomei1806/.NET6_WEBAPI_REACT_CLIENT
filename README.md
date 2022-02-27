@@ -35,22 +35,22 @@ Wyświetla Panel logowania **dane do logowania podane pod email inputem**
 ###### /jobs-create
 
   **POST:** 
-    -pozwala na dodanie nowego ogłoszenia
-    -obsługuje Autoryzację
-    -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
+    -pozwala na dodanie nowego ogłoszenia  
+    -obsługuje Autoryzację  
+    -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"  
 ###### /jobs-update
 
   **PUT:** 
-    -pozwala na edycję ogłoszenia
-    -obsługuje Autoryzację
-    -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
+    -pozwala na edycję ogłoszenia  
+    -obsługuje Autoryzację  
+    -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"  
 ###### /jobs-delete/{id}
 
-  **DELETE:**
-    - pozwala na usunięcie wybranego po id ogłoszenia
-    -obsługuje Autoryzację
-    -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"
-###### /api/login
+  **DELETE:** 
+    - pozwala na usunięcie wybranego po id ogłoszenia  
+    -obsługuje Autoryzację  
+    -pozwala na wykonanie żadania tylko autoryzowanym użytkownikom Role = "admin"  
+###### /api/login  
   zwraca JWT pozwalający na autoryzację
 
 
