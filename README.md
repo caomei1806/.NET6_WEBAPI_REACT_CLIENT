@@ -1,5 +1,5 @@
 # .NET6_WEBAPI_REACT_CLIENT
-Aplikacja JobBoard z Panelem Administratora z wykorzystaniem bazy danych SQLite
+Aplikacja JobBoard z Panelem Administratora z wykorzystaniem bazy danych **SQLite**
 
 Run React App in development mode
 ```
