@@ -2,6 +2,22 @@
 
 ## TEMPORARY DOCS:
 #### Client : React App http://localhost:3000
+##### ROUTING
+###### /
+**NOT LOGGED IN**
+Wyświetla tablice ogłoszeń
+**LOGGED IN**
+Wyświetla Panel Edycji ogłoszeń z możliwością edycji i usuniecia
+
+###### /jobs-create 
+**LOGGED IN**
+Wyświetla Panel Dodaj ogloszenie 
+
+###### /api/login
+**NOT LOGGED IN **
+Wyświetla Panel logowania **dane do logowania podane pod email inputem"
+
+
 ------------------
 #### Server : ASP.NET CORE 6 minimal API https://localhost:3000
 ##### Launching with SwaggerUI
