@@ -77,6 +77,7 @@ const JobList = (props) => {
 					<JobUpdateForm
 						job={props.updateJob}
 						onJobUpdated={props.onJobUpdated}
+						setUpdateJob={props.setUpdateJob}
 					/>
 				)}
 			</div>

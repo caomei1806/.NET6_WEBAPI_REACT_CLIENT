@@ -109,7 +109,7 @@ const JobUpdateForm = (props) => {
 			</button>
 			<button
 				className='btn btn-secondary btn-lg w-100 mt-3'
-				onClick={() => props.onJobUpdated(null)}
+				onClick={() => props.setUpdateJob(null)}
 			>
 				Cancel
 			</button>

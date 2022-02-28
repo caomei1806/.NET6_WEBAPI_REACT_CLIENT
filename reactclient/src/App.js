@@ -39,8 +39,6 @@ function App() {
 	}
 
 	const onJobUpdated = (updatedJob) => {
-		if (updatedJob === null) {
-		}
 		setUpdateJob(null)
 		let clonedJobs = [...jobs]
 
