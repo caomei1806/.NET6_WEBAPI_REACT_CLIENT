@@ -2,6 +2,11 @@
 # JobBoard
 Aplikacja JobBoard z Panelem Administratora z wykorzystaniem bazy danych **SQLite**
 
+Install needed dependencies by running
+```
+npm install
+```
+
 Run React App in development mode
 ```
 npm start
